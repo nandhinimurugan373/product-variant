@@ -3,11 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="frame-ancestors https://admin.shopify.com https://*.myshopify.com;">
   <title>ThreadLux — Classic Everyday Tee</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+  <script>
+if (window.top !== window.self) {
+  document.body.style.display = "block";
+}
+</script>
+  
   <!-- ==============================================
        MODAL 1: LIGHTBOX (fullscreen image viewer)
   =============================================== -->
