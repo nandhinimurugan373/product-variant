@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ThreadLux — Classic Everyday Tee</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ==============================================
+       MODAL 1: LIGHTBOX (fullscreen image viewer)
+  =============================================== -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+    <button class="lightbox-close" id="lb-close" aria-label="Close image viewer">✕</button>
+
+    <!-- Previous / Next navigation arrows -->
+    <button class="lightbox-nav lightbox-prev" id="lb-prev" aria-label="Previous image">&#8249;</button>
+    <button class="lightbox-nav lightbox-next" id="lb-next" aria-label="Next image">&#8250;</button>
+
+    <!-- Main large image display -->
+    <div class="lightbox-stage">
+      <div class="lightbox-img" id="lb-img" aria-label="Enlarged product image">👕</div>
+      <div class="lightbox-caption" id="lb-caption">Front view</div>
+    </div>
+
+    <!-- Dot indicators at bottom -->
+    <div class="lightbox-dots" id="lb-dots" aria-label="Image navigation dots"></div>
+  </div>
+
+  <!-- ==============================================
+       MODAL 2: SIZE CHART
+  =============================================== -->
+  <div class="modal-overlay" id="size-chart-modal" role="dialog" aria-modal="true" aria-label="Size chart" hidden>
+    <div class="modal-box size-chart-box">
+
+      <div class="modal-header">
+        <h2 class="modal-title">Size Chart</h2>
+        <button class="modal-close" id="size-chart-close" aria-label="Close size chart">✕</button>
+      </div>
+
+      <p class="modal-subtitle">Measurements are in centimetres (cm). Chest = fullest part.</p>
+
+      <!-- Size reference table -->
+      <div class="size-table-wrap">
+        <table class="size-table" aria-label="Size reference chart">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Chest (cm)</th>
+              <th>Length (cm)</th>
+              <th>Shoulder (cm)</th>
+              <th>Sleeve (cm)</th>
+              <th>Best for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>S</strong></td>
+              <td>86 – 91</td>
+              <td>68</td>
+              <td>41</td>
+              <td>20</td>
+              <td>Slim / Regular fit</td>
+            </tr>
+            <tr class="row-alt">
+              <td><strong>M</strong></td>
+              <td>91 – 97</td>
+              <td>71</td>
+              <td>43</td>
+              <td>21</td>
+              <td>Regular fit</td>
+            </tr>
+            <tr>
+              <td><strong>L</strong></td>
+              <td>97 – 104</td>
+              <td>74</td>
+              <td>45</td>
+              <td>22</td>
+              <td>Regular / Relaxed</td>
+            </tr>
+            <tr class="row-alt">
+              <td><strong>XL</strong></td>
+              <td>104 – 112</td>
+              <td>77</td>
+              <td>47</td>
+              <td>23</td>
+              <td>Relaxed / Oversized</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- How to measure tip -->
+      <div class="measure-tip">
+        <span class="tip-icon">📏</span>
+        <p><strong>How to measure chest:</strong> Wrap a tape measure around the fullest part of your chest, keeping it horizontal. Add 2–3 cm for comfort.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==============================================
+       CART TOAST NOTIFICATION (fixed overlay)
+  =============================================== -->
+  <div class="cart-toast" id="toast" role="status" aria-live="polite">
+    <div class="toast-icon">✓</div>
+    <div>
+      <strong id="toast-title">Added to cart</strong>
+      <small id="toast-sub">View your cart to checkout</small>
+    </div>
+  </div>
+
+  <!-- ==============================================
+       MAIN PRODUCT PAGE
+  =============================================== -->
+  <main class="page-wrapper">
+    <div class="page">
+      <div class="product-grid">
+
+        <!-- ==========================
+             LEFT PANEL: IMAGE GALLERY
+        =========================== -->
+        <section class="gallery" aria-label="Product images">
+
+          <!-- Promotional badges -->
+          <div class="badge-row">
+            <span class="badge badge-hot">🔥 Best Seller</span>
+            <span class="badge badge-sale" id="sale-badge" style="display:none">Sale</span>
+          </div>
+
+          <!-- Main image with zoom + click-to-lightbox -->
+          <div class="main-img-wrap" id="main-img-wrap" title="Click to enlarge">
+
+            <!-- The emoji image display -->
+            <div class="main-img" id="main-img" role="img" aria-label="Product image">👕</div>
+
+            <!-- Magnifier lens (shown on hover, desktop only) -->
+            <div class="zoom-lens" id="zoom-lens" aria-hidden="true"></div>
+
+            <!-- Hover overlay with icon prompt -->
+            <div class="img-overlay" aria-hidden="true">
+              <div class="overlay-icon">&#128269;</div>
+              <span class="overlay-text">Click to enlarge</span>
+            </div>
+
+          </div>
+
+          <!-- Thumbnail strip -->
+          <div class="thumbs" id="thumbs" role="list" aria-label="Product thumbnails"></div>
+
+        </section>
+
+        <!-- ==========================
+             RIGHT PANEL: PRODUCT INFO
+        =========================== -->
+        <section class="info" aria-label="Product details">
+
+          <!-- Brand · Product name · Rating -->
+          <div class="product-header">
+            <p class="brand">ThreadLux</p>
+            <h1 class="product-name">Classic Everyday Tee</h1>
+            <div class="reviews" aria-label="4.8 out of 5 stars, 312 reviews">
+              <span class="stars" aria-hidden="true">★★★★★</span>
+              <span>4.8 &nbsp;·&nbsp; 312 reviews</span>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Dynamic price block -->
+          <div class="price-section">
+            <div class="price-block">
+              <span class="price-current" id="price-current">From ₹1,099</span>
+              <span class="price-original" id="price-original" style="display:none"></span>
+              <span class="discount-pill" id="discount-pill" style="display:none"></span>
+            </div>
+            <p class="saved-msg" id="saved-msg" style="display:none"></p>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Color swatches -->
+          <div class="option-group">
+            <div class="section-label">
+              Color
+              <span class="selected-val" id="color-label">— Select</span>
+            </div>
+            <div class="swatches" id="swatches" role="group" aria-label="Color options"></div>
+          </div>
+
+          <!-- Size buttons + size chart trigger -->
+          <div class="option-group">
+            <div class="section-label">
+              Size
+              <span class="selected-val" id="size-label">— Select</span>
+            </div>
+            <div class="size-btns" id="size-btns" role="group" aria-label="Size options"></div>
+
+            <!-- Size chart button (opens modal) -->
+            <button class="size-guide-btn" id="size-guide-btn" aria-haspopup="dialog">
+              📐 Size Chart
+            </button>
+          </div>
+
+          <!-- Selected variant summary pill -->
+          <div class="variant-summary" id="variant-summary" aria-live="polite">
+            Select color and size to continue
+          </div>
+
+          <!-- Stock indicator + SKU -->
+          <div class="stock-row">
+            <div class="stock-indicator stock-in" id="stock-status">
+              <div class="stock-dot"></div>
+              <span>Select options</span>
+            </div>
+            <p class="sku-text" id="sku-text">SKU: —</p>
+          </div>
+
+          <!-- Quantity selector + Add to Cart -->
+          <div class="qty-cart-row">
+            <div class="qty-control" role="group" aria-label="Quantity selector">
+              <button class="qty-btn" id="qty-minus" aria-label="Decrease quantity">−</button>
+              <div class="qty-val" id="qty-val" aria-live="polite" aria-atomic="true">1</div>
+              <button class="qty-btn" id="qty-plus" aria-label="Increase quantity">+</button>
+            </div>
+            <button class="cart-btn unavailable" id="cart-btn" aria-live="polite">
+              Select options
+            </button>
+          </div>
+
+          <!-- Trust / shipping note -->
+          <p class="shipping-note">🚚 Free shipping above ₹999 &nbsp;·&nbsp; Easy 30-day returns</p>
+
+        </section>
+      </div><!-- /.product-grid -->
+    </div><!-- /.page -->
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
